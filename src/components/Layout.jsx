@@ -1,9 +1,17 @@
-import React from 'react'
+import React from "react";
 
-const Layout = () => {
+const Layout = (props) => {
+  const { children } = props;
+  const header = <header></header>;
+
+  const footer = <footer></footer>;
   return (
-    <div>Layout</div>
-  )
-}
+    <>
+      {header}
+      <main>{children}</main>
+      {footer}
+    </>
+  );
+};
 
-export default Layout
+export default Layout;
