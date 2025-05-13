@@ -24,7 +24,12 @@ const Hero = () => {
         </div>
 
         <div>That caffiene&apos;s half-life is about 5 hours?</div>
-        <p>This means that after 5 hours, half the caffiene you consumed is still in your system, keeping you alert longer! So if you drink a cup of coffee with 200mg of caffiene, 5 hours later, you&apos;ll still have about 100mg of caffiene in your system.</p>
+        <p>
+          This means that after 5 hours, half the caffiene you consumed is still
+          in your system, keeping you alert longer! So if you drink a cup of
+          coffee with 200mg of caffiene, 5 hours later, you&apos;ll still have
+          about 100mg of caffiene in your system.
+        </p>
       </div>
     </>
   );

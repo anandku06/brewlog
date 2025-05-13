@@ -16,10 +16,18 @@ const Layout = (props) => {
   );
 
   const footer = (
-  <footer>
-    <p><span className="text-gradient">BrewLog</span> was made by <a href="https://www.linkedin.com/in/anand-kumar-023231291">Anand</a> using the <a href="http://www.fantacss.smoljames.com" target="_blank">FantaCSS</a> design library.</p>
-  </footer>
-);
+    <footer>
+      <p>
+        <span className="text-gradient">BrewLog</span> was made by{" "}
+        <a href="https://www.linkedin.com/in/anand-kumar-023231291">Anand</a>{" "}
+        using the{" "}
+        <a href="http://www.fantacss.smoljames.com" target="_blank">
+          FantaCSS
+        </a>{" "}
+        design library.
+      </p>
+    </footer>
+  );
   return (
     <>
       {header}
