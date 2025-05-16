@@ -24,7 +24,8 @@ const Layout = (props) => {
         <a href="http://www.fantacss.smoljames.com" target="_blank">
           FantaCSS
         </a>{" "}
-        design library.
+        design library. <br />
+        Check Out this project on <a href="https://github.com/anandku06/brewlog" target="_blank" rel="noopener noreferrer">GitHub</a>
       </p>
     </footer>
   );
