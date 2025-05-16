@@ -1,5 +1,11 @@
 import React from "react";
-import { calculateCurrentCaffeineLevel, coffeeConsumptionHistory, statusLevels } from "../utils";
+import {
+  calculateCoffeeStats,
+  calculateCurrentCaffeineLevel,
+  coffeeConsumptionHistory,
+  getTopThreeCoffees,
+  statusLevels,
+} from "../utils";
 
 function StatCard(props) {
   const { large, title, children } = props;
@@ -12,14 +18,16 @@ function StatCard(props) {
 }
 
 const Stats = () => {
-  const stats = {
-    daily_caffeine: 240,
-    daily_cost: 6.8,
-    average_coffees: 2.3,
-    total_cost: 220,
-  };
+  const stats = calculateCoffeeStats(coffeeConsumptionHistory);
 
-  const caffeineLevel = calculateCurrentCaffeineLevel(coffeeConsumptionHistory)
+  const caffeineLevel = calculateCurrentCaffeineLevel(coffeeConsumptionHistory);
+
+  const warningLevel =
+    caffeineLevel < statusLevels["low"]
+      ? "low"
+      : caffeineLevel < statusLevels["moderate"]
+      ? "moderate"
+      : "high";
 
   return (
     <>
@@ -34,9 +42,16 @@ const Stats = () => {
             <p>
               <span className="stat-text">{caffeineLevel}</span> mg
             </p>
-            <h5 style={{color : statusLevels['low'].color, background : statusLevels['low'].background}}>Low</h5>
+            <h5
+              style={{
+                color: statusLevels[warningLevel].color,
+                background: statusLevels[warningLevel].background,
+              }}
+            >
+              {warningLevel}
+            </h5>
           </div>
-          <p>{statusLevels['low'].description}</p>
+          <p>{statusLevels[warningLevel].description}</p>
         </StatCard>
 
         <StatCard title="Daily Caffeine">
@@ -46,7 +61,7 @@ const Stats = () => {
         </StatCard>
         <StatCard title="Avg # of Coffee">
           <p>
-            <span className="stat-text">{stats.average_coffees}</span> mg
+            <span className="stat-text">{stats.average_coffees}</span>
           </p>
         </StatCard>
         <StatCard title="Daily Cost ($)">
@@ -59,6 +74,29 @@ const Stats = () => {
             <span className="stat-text">$ {stats.total_cost}</span>
           </p>
         </StatCard>
+
+        <table className="stat-table">
+          <thead>
+            <tr>
+              <th>Coffee Name</th>
+              <th>Number of Purchase</th>
+              <th>Percentage of Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {getTopThreeCoffees(coffeeConsumptionHistory).map(
+              (coffee, coffeeIndex) => {
+                return (
+                  <tr key={coffeeIndex}>
+                    <td>{coffee.coffeeName}</td>
+                    <td>{coffee.count}</td>
+                    <td>{coffee.percentage}</td>
+                  </tr>
+                );
+              }
+            )}
+          </tbody>
+        </table>
       </div>
     </>
   );
