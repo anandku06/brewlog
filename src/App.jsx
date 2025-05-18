@@ -17,7 +17,7 @@ const App = () => {
   return (
     <Layout>
       <Hero />
-      <CoffeeForm />
+      <CoffeeForm isAuthenticated={isAuthenticated} />
       {authenticatedContent}
     </Layout>
   );
