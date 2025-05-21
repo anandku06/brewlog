@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
 const Authentication = () => {
   const [isRegistration, setIsRegistration] = useState(false);
@@ -6,8 +7,31 @@ const Authentication = () => {
   const [password, setPassword] = useState("");
   const [isAuthenticating, setIsAuthenticating] = useState(false);
 
+  const { signup, login } = useAuth();
+
   async function handleAuthenticate() {
-    
+    if (
+      !email ||
+      !email.includes("@") ||
+      !password ||
+      password.length < 6 ||
+      isAuthenticating
+    )
+      return;
+
+    try {
+      setIsAuthenticating(true);
+
+      if (isRegistration) {
+        await signup(email, password);
+      } else {
+        await login(email, password);
+      }
+    } catch (err) {
+      console.log(err.message);
+    } finally {
+      setIsAuthenticating(false);
+    }
   }
 
   return (
@@ -27,13 +51,17 @@ const Authentication = () => {
         placeholder="********"
       />
       <button onClick={handleAuthenticate}>
-        <p>Submit</p>
+        <p>{isAuthenticating ? "Authenticating..." : "Submit"}</p>
       </button>
 
       <hr />
 
       <div className="register-content">
-        <p>{isRegistration ? "Already have an account?" : "Don't have an account?"}</p>
+        <p>
+          {isRegistration
+            ? "Already have an account?"
+            : "Don't have an account?"}
+        </p>
         <button onClick={() => setIsRegistration(!isRegistration)}>
           <p>{isRegistration ? "Sign in" : "Sign up"}</p>
         </button>
