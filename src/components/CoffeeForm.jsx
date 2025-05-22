@@ -11,7 +11,7 @@ const CoffeeForm = (props) => {
   const [coffeeCost, setCoffeeCost] = useState(0);
   const [hour, setHour] = useState(0);
   const [min, setMin] = useState(0);
-  const [showModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(false);
 
   function handleSubmitForm() {
     if (!isAuthenticated) {
@@ -25,7 +25,7 @@ const CoffeeForm = (props) => {
     <>
       {showModal && (
         <Modal handleCloseModal={() => setShowModal(false)}>
-          <Authentication />
+          <Authentication handleCloseModal={() => setShowModal(false)} />
         </Modal>
       )}
       <div className="section-header">

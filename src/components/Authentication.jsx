@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 
-const Authentication = () => {
+const Authentication = (props) => {
+  const { handleCloseModal } = props;
   const [isRegistration, setIsRegistration] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const [error, setError] = useState(null);
 
   const { signup, login } = useAuth();
 
@@ -21,14 +23,21 @@ const Authentication = () => {
 
     try {
       setIsAuthenticating(true);
+      setError(null);
 
       if (isRegistration) {
         await signup(email, password);
       } else {
         await login(email, password);
       }
+
+      handleCloseModal();
     } catch (err) {
       console.log(err.message);
+      setError(err.message);
+      setEmail("");
+      setPassword("");
+    
     } finally {
       setIsAuthenticating(false);
     }
@@ -38,6 +47,7 @@ const Authentication = () => {
     <>
       <h2 className="sign-up-text">{isRegistration ? "Sign up" : "Login"}</h2>
       <p>{isRegistration ? "Create an account!" : "Sign in your account!"}</p>
+      {error && <p>❌ {error}</p>}
       <input
         value={email}
         onChange={(e) => setEmail(e.target.value)}
