@@ -1,7 +1,9 @@
 import React from "react";
 import { calculateCurrentCaffeineLevel, coffeeConsumptionHistory, getCaffeineAmount, timeSinceConsumption } from "../utils";
+import { useAuth } from "../context/AuthContext";
 
 const History = () => {
+  const {globalData} = useAuth()
   return (
     <>
       <div className="section-header">
@@ -10,8 +12,8 @@ const History = () => {
       </div>
       <p><i>Hover for more information!</i></p>
       <div className="coffee-history">
-        {Object.keys(coffeeConsumptionHistory).sort((a, b) => b - a).map((utcTime, cIndex) => {
-          const coffee = coffeeConsumptionHistory[utcTime]
+        {Object.keys(globalData).sort((a, b) => b - a).map((utcTime, cIndex) => {
+          const coffee = globalData[utcTime]
           const timeSinceConsume = timeSinceConsumption(utcTime)
           const originalAmount = getCaffeineAmount(coffee.name)
           const remainingAmount = calculateCurrentCaffeineLevel({
